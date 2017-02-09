@@ -1,0 +1,13 @@
+package main
+
+import "fmt"
+
+func main() {
+	if a := 100; a > 10 {
+		fmt.Println("a>10")
+	}
+
+	for a := 1; a < 100; a++ {
+		fmt.Println(a)
+	}
+}
