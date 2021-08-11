@@ -1,7 +1,8 @@
 package main
 
-import a "fmt"
 import (
+	a "fmt"
+
 	os "os"
 )
 
