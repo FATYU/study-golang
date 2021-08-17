@@ -11,10 +11,10 @@ import (
 
 func main() {
 	start := time.Now()
-	ch := make(chan string)
+	ch := make(chan string) //创建 channel 接收字符串
 
 	for _, url := range os.Args[1:] {
-		go fetch(url, ch)
+		go fetch(url, ch) //每一个参数都会开启goroutine,异步执行http.Get请求
 	}
 	for range os.Args[1:] {
 		fmt.Println(<-ch)
