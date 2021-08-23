@@ -11,7 +11,7 @@ var sep = flag.String("sep", "/", "连接符")
 
 func main() {
 	flag.Parse()
-	fmt.Println(strings.Join(flag.Args(), " "))
+	fmt.Println(strings.Join(flag.Args(), *sep))
 
 	if !*blankline {
 		fmt.Println() //打印空行
