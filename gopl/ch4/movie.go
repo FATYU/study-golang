@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+)
 
 type Movie struct {
 	Title  string
@@ -19,4 +23,14 @@ func main() {
 
 	fmt.Printf("%#v\n", movies)
 
+	data, err := json.Marshal(movies) // json 编组(marchalling)
+	if err != nil {
+		log.Fatalf("Json marchalling error : %s\n", err)
+	}
+	fmt.Printf("%s\n", data)                              //打印格式比较紧凑,可以使用json.MarshalIndent来代替json.Marshal方法
+	data1, err1 := json.MarshalIndent(movies, "", "    ") // json 编组(marchalling)
+	if err1 != nil {
+		log.Fatalf("Json marchalling error : %s\n", err1)
+	}
+	fmt.Printf("%s\n", data1) //打印格式比较紧凑,可以使用json.MarshalIndent来代替json.Marshal方法
 }
