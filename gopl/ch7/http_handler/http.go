@@ -9,17 +9,29 @@ import (
 
 // 使用 http 包中的 handler 来自定义一个从数据库中获取相应的数据映射的handler
 func main() {
-	db := database{"shoes": 50, "socks": 5}
-	// 使用NewServerMux 进行单一路径的单一处理函数
-	mux := http.NewServeMux()
-	mux.Handle("/list", http.HandlerFunc(db.list))
-	mux.Handle("/price", http.HandlerFunc(db.price))
-	//mux.Handle("/list", http.HandlerFunc(db.price)) // runtime error: http: multiple registrations for /list
+	// mux方式创建httpserver
+	//{
+	//	db := database{"shoes": 50, "socks": 5}
+	//	// 使用NewServerMux 进行单一路径的单一处理函数
+	//	mux := http.NewServeMux()
+	//	mux.Handle("/list", http.HandlerFunc(db.list))
+	//	mux.Handle("/price", http.HandlerFunc(db.price))
+	//	//mux.Handle("/list", http.HandlerFunc(db.price)) // runtime error: http: multiple registrations for /list
+	//
+	//	// 使用默认的httpserver
+	//	//log.Fatal(http.ListenAndServe("localhost:8080", db)) //使用db默认的ServerHTTP函数
+	//	// 使用ServerMux绑定httpserver
+	//	log.Fatal(http.ListenAndServe("localhost:8000", mux))
+	//
+	//}
+	//////针对以上的mux方式， golang默认提供了如下更简单的方式
+	{
 
-	// 使用默认的httpserver
-	//log.Fatal(http.ListenAndServe("localhost:8080", db)) //使用db默认的ServerHTTP函数
-	// 使用ServerMux绑定httpserver
-	log.Fatal(http.ListenAndServe("localhost:8000", mux))
+		test := database{"zzz": 1988, "portfolio:": 65535}
+		http.HandleFunc("/zy/list", test.list)
+		http.HandleFunc("/zy/price", test.price)
+		log.Fatal(http.ListenAndServe("localhost:9090", nil))
+	}
 }
 
 type dollars float32
