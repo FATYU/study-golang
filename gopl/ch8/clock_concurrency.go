@@ -19,7 +19,7 @@ func main() {
 			log.Print(err)
 			continue //等待新的客户端链接
 		}
-		handleConn(conn) // 间隔 1s 打印当前日期
+		go handleConCurrencyConn(conn) // 间隔 1s 打印当前日期
 	}
 
 	//fmt.Println(time.Now().Format("2006-01-02 15:04:05"))
@@ -32,7 +32,7 @@ func main() {
 
 }
 
-func handleConn(conn net.Conn) {
+func handleConCurrencyConn(conn net.Conn) {
 	defer func(conn net.Conn) {
 		err := conn.Close()
 		if err != nil {

@@ -19,6 +19,7 @@ func main() {
 			log.Print(err)
 			continue //等待新的客户端链接
 		}
+		// 只有当前在运行的客户端断开链接后，后面的新的客户端才会打印数据。  并发支持可查看clock_concurrency.go
 		handleConn(conn) // 间隔 1s 打印当前日期
 	}
 
