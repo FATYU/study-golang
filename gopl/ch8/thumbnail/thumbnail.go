@@ -5,16 +5,18 @@ import (
 	"image"
 	"image/jpeg"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 	"time"
 )
 
 func main() {
 
 	fmt.Println("start:::::::::::::::>", time.Now().Format("2016-01-02 15:04:05"))
-	makeTumbnail2(os.Args[1:])
+	makeThumbnail2(os.Args[1:])
 	fmt.Println("  end:::::::::::::::>", time.Now().Format("2016-01-02 15:04:05"))
 }
 
@@ -68,9 +70,83 @@ func makeThumbnail4(files []string) error {
 			//解决办法： 创建一个合适大小缓存的channel（buffered channel 参见 makeThumbnail5）
 			return err
 		}
-		return nil
+
+	}
+	return nil
+}
+
+func makeThumbnail5(files []string) (thumbnailFiles []string, err error) {
+
+	//定义结构体，包含生成的文件路径和错误信息
+
+	type item struct {
+		thumbnailFile string
+		err           error
 	}
 
+	flag := make(chan item, len(files)) //创建带有缓冲区的channel
+
+	for _, file := range files {
+		go func(file string) {
+			var item item
+			item.thumbnailFile, item.err = ImageFile(file)
+			flag <- item
+		}(file)
+
+	}
+
+	for range files {
+		f := <-flag
+		if f.err != nil {
+			return nil, f.err //return不会中断for循环吗？
+		}
+		thumbnailFiles = append(thumbnailFiles, f.thumbnailFile)
+	}
+	return thumbnailFiles, nil
+}
+
+// 使用sync.waitGroup方式等待所有的goroutine执行完毕，类似java中的CountdownLatch
+
+//获取所有图片处理后的文件的总byte大小
+func makeThumbnail6(files []string) int64 {
+
+	sizes := make(chan int64) //保存每个goroutine的执行结果的字节大小
+
+	swg := sync.WaitGroup{}
+
+	for _, file := range files {
+		swg.Add(1) //对sycn进行加1操作
+
+		go func(file string) {
+			defer swg.Done() // 进行减1操作
+
+			filePath, err := ImageFile(file)
+			if err != nil {
+				log.Print(err)
+				return //当前匿名函数返回，不影响for循环
+			}
+			stat, err := os.Stat(filePath) //统计路径文件大小
+			if err != nil {
+				log.Print(err)
+				return
+			}
+			sizes <- stat.Size()
+		}(file)
+
+	}
+	//等待所有的goroutine结束
+	go func() {
+		swg.Wait()
+		close(sizes)
+	}()
+
+	var total int64
+
+	for size := range sizes {
+		total += size
+	}
+
+	return total
 }
 
 /// ----------------------------- ⬇️ 导入 thumbnail.go 文件内容函数 -----------------------------------------------
