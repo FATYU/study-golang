@@ -6,10 +6,10 @@ import "sync"
 var (
 	mutex   sync.Mutex //
 	balance int        //共享变量
+
 )
 
 func Deposit(amount int) {
-
 	mutex.Lock()
 	balance += amount //临界区代码
 	mutex.Unlock()
