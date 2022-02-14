@@ -1,3 +1,4 @@
+### Go template
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -17,6 +18,7 @@ bin
 pkg
 .vscode
 .DS_Store
+.idea/*
+
 # Dependency directories (remove the comment below to include it)
 # vendor/
-.idea/*
