@@ -26,7 +26,7 @@ func New(f Func) *Memo {
 // 针对safe.go的代码，进行优化
 //拆分加锁范围。
 // 但是程序性能问题如果函数执行了相同的输入，在并发情况下，可能出现重复执行f()的情况。
-//为了避免这种情况出现，（此方案叫做「重复抑制」Duplicate Suppression）可以通过channel进行消息广播， 从而避免重复执行f()
+//为了避免这种情况出现，（此方案叫做「重复抑制」Duplicate Suppression）可以通过channel进行消息广播， 从而避免重复执行f() 参照channel文件夹
 
 func (memo *Memo) Get(key string) (value interface{}, err error) {
 	memo.mutex.Lock()
