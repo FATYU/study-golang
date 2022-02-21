@@ -2,7 +2,7 @@ module study-golang
 
 go 1.17
 
-require golang.org/x/net v0.0.0-20211015210444-4f30a5c0130f
+require golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd
 
 require (
 	github.com/fogleman/gg v1.3.0 // indirect
