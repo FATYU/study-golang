@@ -5,7 +5,7 @@ import "fmt"
 func main() {
 	// var array [2]int
 
-var test := {}
+	//var test := {}
 
 	//var array_2 [1]int
 	brray := [...]int{3: 4}

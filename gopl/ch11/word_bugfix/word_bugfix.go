@@ -1,6 +1,7 @@
 package word_bugfix
 
 import (
+	"fmt"
 	"strings"
 	"unicode"
 )
@@ -22,4 +23,8 @@ func IsPalindrome(s string) bool {
 		}
 	}
 	return true
+}
+
+func SoPut(s string) {
+	fmt.Println("0000::::::::::::::::::::0")
 }
