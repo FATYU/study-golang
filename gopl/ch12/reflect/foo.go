@@ -8,17 +8,19 @@ import (
 )
 
 func main() {
-	fmt.Println(reflect.TypeOf("zhangyu"))
+	// reflect type
+	fmt.Println("reflect typeof {zhangyu}: ", reflect.TypeOf("zhangyu"))
 	//Output: string
 
 	var w io.Writer = os.Stdout
 
-	fmt.Println(reflect.TypeOf(w))
-	fmt.Printf("%T\n", w)
+	fmt.Println("reflect typeof {os.Stdout}: ", reflect.TypeOf(w))
+	fmt.Printf("reflect typeof {os.Stdout} by %%T:  %T\n", w)
 
+	// reflect value
 	v := reflect.ValueOf(3)
-	fmt.Println(v)
-	fmt.Println(reflect.ValueOf(3))
-	fmt.Printf("%V", 3)
+	fmt.Println("reflect valueof {reflect.ValueOf(3)}: ", v)
+	fmt.Println("reflect valueof {reflect.ValueOf(3).Interface()}: ", reflect.ValueOf(3).Interface())
+	fmt.Printf("reflect valueof 3 by %V", 3)
 
 }
