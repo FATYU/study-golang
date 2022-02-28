@@ -35,6 +35,6 @@ func main() {
 	fmt.Println(unsafe.Alignof(&People{age: 1, name: "zy", birthday: "1990-01-01"}))
 	fmt.Println("-------------------OffsetOf--------------------")
 	fmt.Println(unsafe.Sizeof(x.a), unsafe.Alignof(x.a), unsafe.Offsetof(x.a)) //0 , 内存补位 补到2
-	fmt.Println(unsafe.Sizeof(x.b), unsafe.Alignof(x.b), unsafe.Offsetof(x.b)) //2 ，内存补位 补到8（如果是32位机器，大小是4位，不用进行内存补位）
+	fmt.Println(unsafe.Sizeof(x.b), unsafe.Alignof(x.b), unsafe.Offsetof(x.b)) //2 ，内存补位 补到8（如果是32位机器，大小是2位，加上bool的「2」，刚好为1 word，不用进行内存补位）
 	fmt.Println(unsafe.Sizeof(x.c), unsafe.Alignof(x.c), unsafe.Offsetof(x.c)) //8
 }
