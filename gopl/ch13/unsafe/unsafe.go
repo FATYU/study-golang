@@ -37,4 +37,16 @@ func main() {
 	fmt.Println(unsafe.Sizeof(x.a), unsafe.Alignof(x.a), unsafe.Offsetof(x.a)) //0 , 内存补位 补到2
 	fmt.Println(unsafe.Sizeof(x.b), unsafe.Alignof(x.b), unsafe.Offsetof(x.b)) //2 ，内存补位 补到8（如果是32位机器，大小是2位，加上bool的「2」，刚好为1 word，不用进行内存补位）
 	fmt.Println(unsafe.Sizeof(x.c), unsafe.Alignof(x.c), unsafe.Offsetof(x.c)) //8
+
+	fmt.Println("-------------------Pointer--------------------")
+	fmt.Printf("%#016x\n", Float64Bits(1))
+
+}
+
+// 使用 Pointer 转换， 可能会导致类型系统遭受破坏
+
+func Float64Bits(f float64) uint64 {
+	x := unsafe.Pointer(&f)
+	// 返回转换的 uintptr
+	return *(*uint64)(x)
 }
