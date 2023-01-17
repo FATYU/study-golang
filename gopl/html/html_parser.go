@@ -23,7 +23,7 @@ func main() {
 
 func downloadedCourses() mapset.Set {
 	courses := mapset.NewSet()
-	dirs, err := os.ReadDir("/Users/zhangyu/geektime-downloader/18757155952")
+	dirs, err := os.ReadDir("/Users/zhangyu/geektime-downloader/ ")
 	if err != nil {
 		panic(err)
 	}
@@ -59,7 +59,13 @@ func courseSet() mapset.Set {
 	}
 	doc.Find("div.course-title").Each(func(i int, selection *goquery.Selection) {
 		ss := strings.Replace(selection.Text(), " ", "", -1)
+		fmt.Println(ss)
 		courses.Add(ss)
+	})
+
+	doc.Find("a").Each(func(i int, selection *goquery.Selection) {
+		href, _ := selection.Attr("href")
+		fmt.Println(selection.Text(), ":", href)
 	})
 
 	return courses
